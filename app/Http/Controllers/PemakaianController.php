@@ -12,6 +12,7 @@ class PemakaianController extends Controller
     {
         $query = Pemakaian::with(['pelanggan']);
 
+        // Filter berdasarkan input request
         if ($request->filled('no_kontrol')) {
             $query->where('no_kontrol', 'like', '%' . $request->no_kontrol . '%');
         }
@@ -24,10 +25,14 @@ class PemakaianController extends Controller
             $query->where('bulan', $request->bulan);
         }
 
-        $pemakaians = $query->get();
+        $totalPemakaian = $query->count();
 
-        return view('admin.pemakaian.index', compact('pemakaians'));
+        $pemakaians = $query->paginate(15);
+
+        return view('admin.pemakaian.index', compact('pemakaians', 'totalPemakaian'));
     }
+
+
 
     public function create(Request $request)
     {

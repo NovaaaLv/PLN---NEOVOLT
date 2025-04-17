@@ -5,7 +5,6 @@
     </x-header.text-container>
   </x-header.container>
 
-
   <x-card.container>
     <x-card.header label="Data Semua pelanggan" />
 
@@ -16,12 +15,11 @@
         Total Pelanggan:
         <span
           class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full">
-          {{ $pelanggans->count() }}
+          {{ $pelanggans->total() }}
         </span>
       </p>
 
     </x-card.action>
-
 
     <table class="w-full mt-10">
       <tr class="w-full">
@@ -33,9 +31,10 @@
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Jenis Pelanggan</th>
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Aksi</th>
       </tr>
-      @forelse ($pelanggans as $pelanggan)
+
+      @foreach ($pelanggans as $pelanggan)
         <tr class="transition-all duration-300 ease-in-out text-slate-600 hover:bg-indigo-50">
-          <td class="px-5 py-3 text-left">{{ $loop->iteration }}</td>
+          <td class="px-5 py-3 text-left">{{ $pelanggans->firstItem() + $loop->index }}</td>
           <td class="px-5 py-3 text-left">{{ $pelanggan->no_kontrol }}</td>
           <td class="px-5 py-3 text-left">{{ $pelanggan->nama }}</td>
           <td class="px-5 py-3 text-left">{{ $pelanggan->alamat }}</td>
@@ -58,12 +57,14 @@
                     @method('DELETE')
                     <x-table.action-item :isButton="true" label="Delete" icon="fa-trash" />
                   </form>
-                  </form>
                 </x-slot>
               </x-dropdown>
+            </div>
           </td>
         </tr>
-      @empty
+      @endforeach
+
+      @if ($pelanggans->isEmpty())
         <tr>
           <td rowspan="7" colspan="7">
             <div class="flex flex-col items-center justify-center py-10">
@@ -73,7 +74,15 @@
             </div>
           </td>
         </tr>
-      @endforelse
+      @endif
+
+      <tr>
+        <td rowspan="7" colspan="7">
+          <div class="mt-4">
+            {{ $pelanggans->links('vendor.pagination.tailwind') }}
+          </div>
+        </td>
+      </tr>
     </table>
   </x-card.container>
 </x-app-layout>

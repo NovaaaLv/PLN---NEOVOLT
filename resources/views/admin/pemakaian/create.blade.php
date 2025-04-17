@@ -115,7 +115,7 @@
     @else
       <div class="flex items-center justify-center w-full p-5">
         <p class="w-full h-full px-3 py-5 text-lg font-semibold text-center border rounded-xl text-slate-700">
-          Mohon Untuk Masuka Data Kontrol Bulan Dan Tahun Terlebih Dahulu
+          Mohon Untuk Masukan Data Kontrol Bulan Dan Tahun Terlebih Dahulu
         </p>
       </div>
     @endif

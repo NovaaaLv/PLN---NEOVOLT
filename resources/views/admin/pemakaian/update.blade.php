@@ -20,7 +20,7 @@
           <x-form.label label="No Kontrol" id="no_kontrol" />
           <x-form.input name="no_kontrol_view" id="no_kontrol_view" type="text"
             value="{{ $pemakaian->pelanggan->no_kontrol }}" :isReadonly="true" />
-          <x-form.input name="no_kontrol" id="no_kontrol" type="text" value="{{ $pemakaian->pelanggan->id }}"
+          <x-form.input name="no_kontrol" id="no_kontrol" type="text" value="{{ $pemakaian->pelanggan->no_kontrol }}"
             :isReadonly="true" :isHidden="true" />
         </div>
 
@@ -81,7 +81,7 @@
         <x-form.select.container id="status" name="status">
           @if ($pemakaian->status === 'lunas')
             <x-form.select.option value="belum_lunas" label="Belum Lunas" />
-            <x-form.select.option value="lunas" label="Lunas" :isSelected="true"/>
+            <x-form.select.option value="lunas" label="Lunas" :isSelected="true" />
           @elseif ($pemakaian->status === 'belum_lunas')
             <x-form.select.option value="lunas" label="Lunas" />
             <x-form.select.option value="belum_lunas" label="Belum Lunas" :isSelected="true" />

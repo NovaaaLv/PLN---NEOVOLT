@@ -18,7 +18,7 @@
           Total Pemakaian:
           <span
             class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full">
-            {{ $pemakaians->count() }}
+            {{ $totalPemakaian }}
           </span>
         </p>
         {{-- search berdasarkan bulan tahun dan no kontrol --}}
@@ -64,7 +64,7 @@
       </tr>
       @forelse ($pemakaians as $pemakaian)
         <tr class="transition-all duration-300 ease-in-out text-slate-600 hover:bg-indigo-50">
-          <td class="px-5 py-3 text-left">{{ $loop->iteration }}</td>
+          <td class="px-5 py-3 text-left">{{ $pemakaians->firstItem() + $loop->index }}</td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->tahun }}</td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->bulan }}</td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->pelanggan->no_kontrol }}</td>
@@ -108,6 +108,13 @@
           </td>
         </tr>
       @endforelse
+      <tr>
+        <td rowspan="12" colspan="12">
+          <div class="mt-4">
+            {{ $pemakaians->links('vendor.pagination.tailwind') }}
+          </div>
+        </td>
+      </tr>
     </table>
   </x-card.container>
 </x-app-layout>

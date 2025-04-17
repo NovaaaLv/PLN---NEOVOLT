@@ -23,12 +23,31 @@ class PembayaranController extends Controller
             $query->where('bulan', $request->bulan);
         }
 
-        $pemakaians = $query->get();
+        // Pagination hanya untuk data yang ditampilkan
+        $pemakaians = $query->paginate(10);
 
-        $totalLunas = $pemakaians->where('status', 'lunas')->count();
-        $totalBelumLunas = $pemakaians->where('status', 'belum_lunas')->count();
-        return view('admin.pembayaran.index', compact('pemakaians', 'totalLunas', 'totalBelumLunas'));
+        // Hitung total lunas & belum lunas dari seluruh data yang sesuai filter (tanpa pagination)
+        $baseQuery = Pemakaian::query();
+
+        if ($request->filled('no_kontrol')) {
+            $baseQuery->where('no_kontrol', 'like', '%' . $request->no_kontrol . '%');
+        }
+
+        if ($request->filled('tahun')) {
+            $baseQuery->where('tahun', $request->tahun);
+        }
+
+        if ($request->filled('bulan')) {
+            $baseQuery->where('bulan', $request->bulan);
+        }
+
+        $totalLunas = (clone $baseQuery)->where('status', 'lunas')->count();
+        $totalBelumLunas = (clone $baseQuery)->where('status', 'belum_lunas')->count();
+        $totalSemua = (clone $baseQuery)->count();
+
+        return view('admin.pembayaran.index', compact('pemakaians', 'totalLunas', 'totalBelumLunas', 'totalSemua'));
     }
+
 
 
     public function view(Request $request, $id)

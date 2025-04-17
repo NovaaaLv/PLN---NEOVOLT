@@ -91,6 +91,14 @@
         </x-form.group>
       </div>
 
+      <div class="mt-6">
+        <x-form.group>
+          <x-form.label label="Total Bayar" id="total_bayar" />
+          <x-form.input name="total_bayar" id="total_bayar" type="text" value="{{ $pemakaian->total_bayar }}"
+            :isReadonly="true" />
+        </x-form.group>
+      </div>
+
       {{-- Status --}}
       <div class="mt-6">
         <x-form.group>

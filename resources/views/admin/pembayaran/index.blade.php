@@ -20,29 +20,29 @@
             {{ $totalSemua }}
           </span>
           <span
-            class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-green-700 bg-green-100 rounded-full relative group"
+            class="relative inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-green-700 bg-green-100 rounded-full group"
             title="Total Sudah Lunas">
             {{ $totalLunas }}
 
             <span
-              class="absolute bottom-full mb-2 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10 transition-all duration-300 ease-in-out">Sudah
+              class="absolute z-10 px-2 py-1 mb-2 text-xs text-white transition-all duration-300 ease-in-out scale-0 bg-gray-800 rounded opacity-0 bottom-full group-hover:opacity-100 group-hover:scale-100 whitespace-nowrap">Sudah
               Lunas</span>
           </span>
           <span
-            class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-red-700 bg-red-100 rounded-full group relative"
+            class="relative inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-red-700 bg-red-100 rounded-full group"
             title="Total Belum Lunas">
             {{ $totalBelumLunas }}
 
             <span
-              class="absolute bottom-full mb-2 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10 transition-all duration-300 ease-in-out">Belum
+              class="absolute z-10 px-2 py-1 mb-2 text-xs text-white transition-all duration-300 ease-in-out scale-0 bg-gray-800 rounded opacity-0 bottom-full group-hover:opacity-100 group-hover:scale-100 whitespace-nowrap">Belum
               Lunas</span>
           </span>
           <a href="{{ route('report.all') }}"
-            class="inline-flex items-center justify-center ml-2 text-sm font-semibold text-indigo-700 rounded-full group relative cursor-pointer">
+            class="relative inline-flex items-center justify-center ml-2 text-sm font-semibold text-indigo-700 rounded-full cursor-pointer group">
             <i class="fa-solid fa-file-pdf"></i>
 
             <span
-              class="absolute bottom-full mb-2 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10 transition-all duration-300 ease-in-out">Download
+              class="absolute z-10 px-2 py-1 mb-2 text-xs text-white transition-all duration-300 ease-in-out scale-0 bg-gray-800 rounded opacity-0 bottom-full group-hover:opacity-100 group-hover:scale-100 whitespace-nowrap">Download
               Laporan</span>
           </a>
         </p>
@@ -84,8 +84,8 @@
           <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Meter Awal</th>
           <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Meter Akhir</th>
           <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Jumlah Pakai</th>
-          <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Biaya Beban Pemakai</th>
           <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Biaya Pemakaian</th>
+          <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Total Bayar</th>
           <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Status</th>
           <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Aksi</th>
         </tr>
@@ -100,8 +100,8 @@
             <td class="px-5 py-3 text-left">{{ $pemakaian->meter_awal }}</td>
             <td class="px-5 py-3 text-left">{{ $pemakaian->meter_akhir }}</td>
             <td class="px-5 py-3 text-left">{{ $pemakaian->jumlah_pakai }}</td>
-            <td class="px-5 py-3 text-left">{{ $pemakaian->biaya_beban_pemakai }}</td>
             <td class="px-5 py-3 text-left">{{ $pemakaian->biaya_pemakaian }}</td>
+            <td class="px-5 py-3 text-left">{{ $pemakaian->total_bayar }}</td>
             <td class="px-5 py-3 text-left">
               <x-status-badge :status="$pemakaian->status" :isButton="true" />
             </td>
@@ -135,7 +135,7 @@
           <tr>
             <td rowspan="13" colspan="13">
               <div class="flex flex-col items-center justify-center py-10">
-                <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="w-52 mb-4">
+                <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="mb-4 w-52">
                 <p class="text-lg font-semibold text-slate-700">Belum ada data pembayaran</p>
               </div>
             </td>

@@ -58,8 +58,8 @@
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Meter Awal</th>
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Meter Akhir</th>
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Jumlah Pakai</th>
-        <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Biaya Beban Pemakai</th>
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Biaya Pemakaian</th>
+        <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Total Bayar</th>
         <th class="px-5 py-2 text-left text-slate-700 bg-slate-100">Aksi</th>
       </tr>
       @forelse ($pemakaians as $pemakaian)
@@ -73,8 +73,9 @@
           <td class="px-5 py-3 text-left">{{ $pemakaian->meter_awal }}</td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->meter_akhir }}</td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->jumlah_pakai }}</td>
-          <td class="px-5 py-3 text-left">{{ $pemakaian->biaya_beban_pemakai }}</td>
+          </td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->biaya_pemakaian }}</td>
+          <td class="px-5 py-3 text-left">{{ $pemakaian->total_bayar }}</td>
           <td>
             <div class="hidden sm:flex sm:items-center sm:ms-6">
               <x-dropdown align="right" width="48">
@@ -101,9 +102,9 @@
         <tr>
           <td rowspan="12" colspan="12">
             <div class="flex flex-col items-center justify-center py-10">
-              <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="w-52 mb-4">
+              <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="mb-4 w-52">
               <p class="text-lg font-semibold text-slate-700">Belum ada pemakaian</p>
-              <p class="text-sm text-slate-500 mt-1">Silakan tambahkan data terlebih dahulu</p>
+              <p class="mt-1 text-sm text-slate-500">Silakan tambahkan data terlebih dahulu</p>
             </div>
           </td>
         </tr>

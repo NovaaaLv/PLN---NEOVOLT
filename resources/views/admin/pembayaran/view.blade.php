@@ -75,13 +75,19 @@
       </div>
     </div>
 
-    <div class="w-[50%] flex flex-col justify-start gap-1">
-      <x-form.label label="Status" id="status" />
-      <x-form.input name="Status" id="status" type="text" :isReadonly="true" :isStatus="true"
-        value="{{ $pemakaian->status }}" />
+    <div class="flex w-full gap-2">
+      <div class="w-[50%] flex flex-col justify-start gap-1">
+        <x-form.label label="Status" id="status" />
+        <x-form.input name="Status" id="status" type="text" :isReadonly="true" :isStatus="true"
+          value="{{ $pemakaian->status }}" />
+      </div>
 
+      <div class="w-[50%] flex flex-col justify-start gap-1">
+        <x-form.label label="Total Bayar" id="total_bayar" />
+        <x-form.input name="total_bayar" id="total_bayar" type="number" :isReadonly="true"
+          value="{{ $pemakaian->total_bayar }}" :isReadonly="true" />
+      </div>
     </div>
-
     <form action="{{ route('pembayaran.updateStatus', ['id' => $pemakaian->id]) }}" method="POST">
       @csrf
       @method('PUT')

@@ -76,17 +76,24 @@
         </div>
       </div>
 
-      <div class="w-[50%] flex flex-col justify-start gap-1">
-        <x-form.label label="Status" id="status" />
-        <x-form.select.container id="status" name="status">
-          @if ($pemakaian->status === 'lunas')
-            <x-form.select.option value="belum_lunas" label="Belum Lunas" />
-            <x-form.select.option value="lunas" label="Lunas" :isSelected="true" />
-          @elseif ($pemakaian->status === 'belum_lunas')
-            <x-form.select.option value="lunas" label="Lunas" />
-            <x-form.select.option value="belum_lunas" label="Belum Lunas" :isSelected="true" />
-          @endif
-        </x-form.select.container>
+      <div class="flex w-full gap-2">
+        <div class="w-[50%] flex flex-col justify-start gap-1">
+          <x-form.label label="Status" id="status" />
+          <x-form.select.container id="status" name="status">
+            @if ($pemakaian->status === 'lunas')
+              <x-form.select.option value="belum_lunas" label="Belum Lunas" />
+              <x-form.select.option value="lunas" label="Lunas" :isSelected="true" />
+            @elseif ($pemakaian->status === 'belum_lunas')
+              <x-form.select.option value="lunas" label="Lunas" />
+              <x-form.select.option value="belum_lunas" label="Belum Lunas" :isSelected="true" />
+            @endif
+          </x-form.select.container>
+        </div>
+        <div class="w-[50%] flex flex-col justify-start gap-1">
+          <x-form.label label="Total Bayar" id="total_bayar" />
+          <x-form.input name="total_bayar" id="total_bayar" type="number" :isReadonly="true"
+            value="{{ $pemakaian->total_bayar }}" :isReadonly="true" />
+        </div>
       </div>
 
       <div class="">

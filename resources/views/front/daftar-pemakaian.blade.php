@@ -43,6 +43,11 @@
               <p class="font-semibold text-emerald-600">Rp{{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}
               </p>
             </div>
+            <div class="flex items-center justify-between">
+              <p class="text-gray-600">Total Bayar</p>
+              <p class="font-semibold text-emerald-600">Rp{{ number_format($pemakaian->total_bayar, 0, ',', '.') }}
+              </p>
+            </div>
           </div>
 
           <!-- Footer -->

@@ -25,6 +25,8 @@ class PemakaianController extends Controller
             $query->where('bulan', $request->bulan);
         }
 
+        $query->orderBy('created_at', 'desc');
+
         $totalPemakaian = $query->count();
 
         $pemakaians = $query->paginate(15);
@@ -89,6 +91,7 @@ class PemakaianController extends Controller
 
         $jumlah_pakai = $request->meter_akhir - $request->meter_awal;
         $biaya_pemakaian = $jumlah_pakai * $request->tarif_kwh;
+        $total_bayar = $biaya_pemakaian + $request->biaya_beban_pemakai;
 
         Pemakaian::create([
             'no_kontrol'            => $request->no_kontrol,
@@ -100,6 +103,7 @@ class PemakaianController extends Controller
             'biaya_beban_pemakai'   => $request->biaya_beban_pemakai,
             'tarif_kwh'             => $request->tarif_kwh,
             'biaya_pemakaian'       => $biaya_pemakaian,
+            'total_bayar'           => $total_bayar,
         ]);
 
         return redirect()->route('pemakaian.index')->with('success', 'Data Pemakaian berhasil ditambahkan');
@@ -127,8 +131,8 @@ class PemakaianController extends Controller
         ]);
 
         $jumlah_pakai = $request->meter_akhir - $request->meter_awal;
-
         $biaya_pemakaian = $jumlah_pakai * $request->tarif_kwh;
+        $total_bayar = $biaya_pemakaian + $request->biaya_beban_pemakai;
 
         $pemakaian->update([
             'no_kontrol' => $request->no_kontrol,
@@ -140,6 +144,7 @@ class PemakaianController extends Controller
             'biaya_beban_pemakai' => $request->biaya_beban_pemakai,
             'tarif_kwh' => $request->tarif_kwh,
             'biaya_pemakaian' => $biaya_pemakaian,
+            'total_bayar'           => $total_bayar,
         ]);
 
         return back()->with('success', 'Berhasil Mengupdate Pemakaian');

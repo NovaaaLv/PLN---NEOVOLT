@@ -23,6 +23,8 @@ class PembayaranController extends Controller
             $query->where('bulan', $request->bulan);
         }
 
+        $query->orderBy('created_at', 'desc');
+
         // Pagination hanya untuk data yang ditampilkan
         $pemakaians = $query->paginate(10);
 

@@ -11,10 +11,14 @@ class PelangganController extends Controller
     public function index()
     {
         $totalPelanggan = Pelanggan::count();
-        $pelanggans = Pelanggan::with('jenis')->paginate(15);
+
+        $pelanggans = Pelanggan::with('jenis')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
 
         return view('admin.pelanggan.index', compact('pelanggans', 'totalPelanggan'));
     }
+
 
 
     public function create()

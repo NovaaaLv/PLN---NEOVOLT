@@ -85,6 +85,7 @@
           <th>Biaya Beban</th>
           <th>Tarif KWH</th>
           <th>Biaya Pemakaian</th>
+          <th>Total Bayar</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -103,6 +104,7 @@
             <td class="text-right">Rp {{ number_format($item->biaya_beban_pemakai, 0, ',', '.') }}</td>
             <td class="text-right">Rp {{ number_format($item->tarif_kwh, 0, ',', '.') }}</td>
             <td class="text-right">Rp {{ number_format($item->biaya_pemakaian, 0, ',', '.') }}</td>
+            <td class="text-right">Rp {{ number_format($item->total_bayar, 0, ',', '.') }}</td>
             <td>{{ str_replace('_', ' ', $item->status) }}</td>
           </tr>
         @endforeach

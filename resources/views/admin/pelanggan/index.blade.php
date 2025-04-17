@@ -15,7 +15,7 @@
         Total Pelanggan:
         <span
           class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full">
-          {{ $pelanggans->total() }}
+          {{ $totalPelanggan }}
         </span>
       </p>
 

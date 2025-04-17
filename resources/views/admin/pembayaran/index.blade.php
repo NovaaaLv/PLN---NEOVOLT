@@ -9,6 +9,69 @@
   <x-card.container>
     <x-card.header label="Data Pembayaran" />
 
+    <x-card.action>
+      <div class=""></div>
+      <div class="space-y-2">
+        <p class="text-sm text-slate-600">
+          Total Pembayaran:
+          <span
+            class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full"
+            title="Total Semua Data">
+            {{ $pemakaians->count() }}
+          </span>
+          <span
+            class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-green-700 bg-green-100 rounded-full relative group"
+            title="Total Sudah Lunas">
+            {{ $totalLunas }}
+
+            <span
+              class="absolute bottom-full mb-2 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10 transition-all duration-300 ease-in-out">Sudah
+              Lunas</span>
+          </span>
+          <span
+            class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-red-700 bg-red-100 rounded-full group relative"
+            title="Total Belum Lunas">
+            {{ $totalBelumLunas }}
+
+            <span
+              class="absolute bottom-full mb-2 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10 transition-all duration-300 ease-in-out">Belum
+              Lunas</span>
+          </span>
+          <a href="{{ route('report.all') }}"
+            class="inline-flex items-center justify-center ml-2 text-sm font-semibold text-indigo-700 rounded-full group relative cursor-pointer">
+            <i class="fa-solid fa-file-pdf"></i>
+
+            <span
+              class="absolute bottom-full mb-2 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10 transition-all duration-300 ease-in-out">Download
+              Laporan</span>
+          </a>
+        </p>
+        {{-- Search No Kontrol Tahun dan Bulan --}}
+        <form action="{{ route('pembayaran.index') }}" method="GET" class="flex items-center gap-2">
+          <input type="text" name="no_kontrol" placeholder="No Kontrol" value="{{ request('no_kontrol') }}"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600" />
+
+          <input type="number" name="tahun" placeholder="Tahun" value="{{ request('tahun') }}"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600" />
+
+          <select name="bulan"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600">
+            <option value="">Bulan</option>
+            @foreach (range(1, 12) as $bln)
+              <option value="{{ $bln }}" @selected(request('bulan') == $bln)>
+                {{ DateTime::createFromFormat('!m', $bln)->format('F') }}
+              </option>
+            @endforeach
+          </select>
+
+          <button type="submit"
+            class="px-3 py-1 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
+            Cari
+          </button>
+        </form>
+      </div>
+    </x-card.action>
+
     <div class="overflow-x-scroll overflow-y-clip">
       <table class="w-full mt-10">
         <tr class="w-full">
@@ -70,8 +133,11 @@
           </tr>
         @empty
           <tr>
-            <td rowspan="12" colspan="12">
-              <p class="py-4 mt-5 text-xl font-semibold text-center text-slate-800">Data Tidak Teredia</p>
+            <td rowspan="13" colspan="13">
+              <div class="flex flex-col items-center justify-center py-10">
+                <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="w-52 mb-4">
+                <p class="text-lg font-semibold text-slate-700">Belum ada data pembayaran</p>
+              </div>
             </td>
           </tr>
         @endforelse

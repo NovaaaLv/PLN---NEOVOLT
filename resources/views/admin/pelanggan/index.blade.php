@@ -11,7 +11,17 @@
 
     <x-card.action>
       <x-button.primary label="Tambah pelanggan" :isLink="true" href="{{ route('pelanggan.create') }}" />
+
+      <p class="text-sm text-slate-600">
+        Total Pelanggan:
+        <span
+          class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full">
+          {{ $pelanggans->count() }}
+        </span>
+      </p>
+
     </x-card.action>
+
 
     <table class="w-full mt-10">
       <tr class="w-full">
@@ -56,7 +66,11 @@
       @empty
         <tr>
           <td rowspan="7" colspan="7">
-            <p class="py-4 mt-5 text-xl font-semibold text-center text-slate-800">Data Tidak Teredia</p>
+            <div class="flex flex-col items-center justify-center py-10">
+              <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="w-52 mb-4">
+              <p class="text-lg font-semibold text-slate-700">Belum ada data pelanggan</p>
+              <p class="text-sm text-slate-500 mt-1">Silakan tambahkan data terlebih dahulu</p>
+            </div>
           </td>
         </tr>
       @endforelse

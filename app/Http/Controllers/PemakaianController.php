@@ -8,11 +8,27 @@ use Illuminate\Http\Request;
 
 class PemakaianController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pemakaians = Pemakaian::with(['pelanggan'])->get();
+        $query = Pemakaian::with(['pelanggan']);
+
+        if ($request->filled('no_kontrol')) {
+            $query->where('no_kontrol', 'like', '%' . $request->no_kontrol . '%');
+        }
+
+        if ($request->filled('tahun')) {
+            $query->where('tahun', $request->tahun);
+        }
+
+        if ($request->filled('bulan')) {
+            $query->where('bulan', $request->bulan);
+        }
+
+        $pemakaians = $query->get();
+
         return view('admin.pemakaian.index', compact('pemakaians'));
     }
+
     public function create(Request $request)
     {
         $no_kontrol = $request->get('no_kontrol');

@@ -1,3 +1,3 @@
-<div class="justify-between w-full mt-5">
-    {{$slot}}
+<div class="justify-between w-full flex mt-5">
+  {{ $slot }}
 </div>

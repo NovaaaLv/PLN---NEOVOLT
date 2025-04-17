@@ -52,7 +52,11 @@
       @empty
         <tr>
           <td rowspan="5" colspan="5">
-            <p class="py-4 mt-5 text-xl font-semibold text-center text-slate-800">Data Tidak Teredia</p>
+            <div class="flex flex-col items-center justify-center py-10">
+              <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="w-52 mb-4">
+              <p class="text-lg font-semibold text-slate-700">Belum ada data tarif</p>
+              <p class="text-sm text-slate-500 mt-1">Silakan tambahkan data terlebih dahulu</p>
+            </div>
           </td>
         </tr>
       @endforelse

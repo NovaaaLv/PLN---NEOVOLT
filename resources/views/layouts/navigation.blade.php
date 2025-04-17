@@ -5,8 +5,8 @@
       <div class="flex">
         <!-- Logo -->
         <div class="flex items-center shrink-0">
-          <a href="{{ route('dashboard') }}">
-            <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
+          <a href="#" class="text-lg font-bold text-indigo-600 ">
+            PLNEOVLT
           </a>
         </div>
 
@@ -14,9 +14,6 @@
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
           @if (Auth::user()->role === 'admin')
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-              {{ __('Dashboard') }}
-            </x-nav-link>
             <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
               {{ __('Pengguna ( Team )') }}
             </x-nav-link>
@@ -27,17 +24,17 @@
               {{ __('Pelanggan') }}
             </x-nav-link>
             <x-nav-link :href="route('pemakaian.index')" :active="request()->routeIs('pemakaian.index')">
-                {{ __('Pemakaian') }}
-              </x-nav-link>
+              {{ __('Pemakaian') }}
+            </x-nav-link>
             <x-nav-link :href="route('pembayaran.index')" :active="request()->routeIs('pembayaran.index')">
-                {{ __('Pembayaran') }}
-              </x-nav-link>
+              {{ __('Pembayaran') }}
+            </x-nav-link>
           @endif
 
           @if (Auth::user()->role === 'petugas_loket')
-          <x-nav-link :href="route('pelanggan.index')" :active="request()->routeIs('pelanggan.index')">
-            {{ __('Pelanggan') }}
-          </x-nav-link>
+            <x-nav-link :href="route('pelanggan.index')" :active="request()->routeIs('pelanggan.index')">
+              {{ __('Pelanggan') }}
+            </x-nav-link>
             <x-nav-link :href="route('pembayaran.index')" :active="request()->routeIs('pembayaran.index')">
               {{ __('Pembayaran') }}
             </x-nav-link>

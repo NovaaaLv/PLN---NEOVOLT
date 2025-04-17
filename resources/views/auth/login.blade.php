@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -44,4 +44,50 @@
             </x-primary-button>
         </div>
     </form>
+</x-guest-layout> --}}
+
+
+<x-guest-layout>
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-4xl bg-white shadow-lg rounded-xl overflow-hidden flex">
+
+      <!-- Gambar -->
+      <div class="w-1/2 hidden md:block">
+        <img src="{{ asset('assets/images/Login-rafiki.svg') }}" alt="Login Illustration"
+          class="w-full h-full object-cover">
+      </div>
+
+      <!-- Form -->
+      <div class="w-full md:w-1/2 p-8">
+        <h2 class="text-3xl font-bold text-gray-800">Login</h2>
+        <p class="text-lg text-gray-500 mb-6">Satu langkah menuju pelayanan terbaik — ayo login dan mulai!</p>
+
+        <form method="POST" action="{{ route('login') }}" class="space-y-4">
+          @csrf
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" id="email" required autofocus
+              class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" name="password" id="password" required
+              class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+
+          <!-- Tombol -->
+          <div>
+            <button type="submit"
+              class="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">Login</button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
 </x-guest-layout>

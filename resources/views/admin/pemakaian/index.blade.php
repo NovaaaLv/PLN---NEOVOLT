@@ -10,7 +10,41 @@
     <x-card.header label="Data Semua Pemakaian" />
 
     <x-card.action>
-      <x-button.primary label="Tambah Data Pemakaian" :isLink="true" href="{{ route('pemakaian.create') }}" />
+      <div class="flex items-end">
+        <x-button.primary label="Tambah Data Pemakaian" :isLink="true" href="{{ route('pemakaian.create') }}" />
+      </div>
+      <div class="space-y-2">
+        <p class="text-sm text-slate-600">
+          Total Pemakaian:
+          <span
+            class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full">
+            {{ $pemakaians->count() }}
+          </span>
+        </p>
+        {{-- search berdasarkan bulan tahun dan no kontrol --}}
+        <form action="{{ route('pemakaian.index') }}" method="GET" class="flex items-center gap-2">
+          <input type="text" name="no_kontrol" placeholder="No Kontrol" value="{{ request('no_kontrol') }}"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600" />
+
+          <input type="number" name="tahun" placeholder="Tahun" value="{{ request('tahun') }}"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600" />
+
+          <select name="bulan"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600">
+            <option value="">Bulan</option>
+            @foreach (range(1, 12) as $bln)
+              <option value="{{ $bln }}" @selected(request('bulan') == $bln)>
+                {{ DateTime::createFromFormat('!m', $bln)->format('F') }}
+              </option>
+            @endforeach
+          </select>
+
+          <button type="submit"
+            class="px-3 py-1 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
+            Cari
+          </button>
+        </form>
+      </div>
     </x-card.action>
 
     <table class="w-full mt-10">
@@ -66,7 +100,11 @@
       @empty
         <tr>
           <td rowspan="12" colspan="12">
-            <p class="py-4 mt-5 text-xl font-semibold text-center text-slate-800">Data Tidak Teredia</p>
+            <div class="flex flex-col items-center justify-center py-10">
+              <img src="{{ asset('assets/images/Empty-pana.svg') }}" alt="Data Kosong" class="w-52 mb-4">
+              <p class="text-lg font-semibold text-slate-700">Belum ada pemakaian</p>
+              <p class="text-sm text-slate-500 mt-1">Silakan tambahkan data terlebih dahulu</p>
+            </div>
           </td>
         </tr>
       @endforelse

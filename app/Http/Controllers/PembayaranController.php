@@ -50,13 +50,36 @@ class PembayaranController extends Controller
         return view('admin.pembayaran.index', compact('pemakaians', 'totalLunas', 'totalBelumLunas', 'totalSemua'));
     }
 
-
-
     public function view(Request $request, $id)
     {
         $pemakaian = Pemakaian::findOrFail($id);
-        return view('admin.pembayaran.view', compact('pemakaian'));
+
+        // Hitung total tunggakan
+        $tunggakan = Pemakaian::where('no_kontrol', $pemakaian->no_kontrol)
+            ->where('status', 'belum_lunas')
+            ->where('id', '!=', $pemakaian->id)
+            ->sum('total_bayar');
+
+        // Ambil daftar bulan & tahun yang belum lunas
+        $belumLunas = Pemakaian::where('no_kontrol', $pemakaian->no_kontrol)
+            ->where('status', 'belum_lunas')
+            ->where('id', '!=', $pemakaian->id)
+            ->get(['bulan', 'tahun', 'total_bayar']);
+
+
+        return view('admin.pembayaran.view', compact('pemakaian', 'tunggakan', 'belumLunas'));
     }
+
+    public function lunasiSemuaTunggakan(Request $request, $no_kontrol)
+    {
+        // Update semua yang belum lunas jadi lunas
+        Pemakaian::where('no_kontrol', $no_kontrol)
+            ->where('status', 'belum_lunas')
+            ->update(['status' => 'lunas']);
+
+        return redirect()->back()->with('success', 'Semua tunggakan berhasil dilunasi.');
+    }
+
 
     public function updateStatus($id)
     {

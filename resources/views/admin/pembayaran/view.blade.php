@@ -6,7 +6,6 @@
     </x-header.text-container>
   </x-header.container>
 
-
   <x-card.container>
     <x-card.header label="Detail Data Pembayaran" />
 
@@ -33,7 +32,6 @@
       </div>
     </div>
 
-
     <div class="flex w-full gap-2 mt-2">
       <div class="flex items-end justify-start w-1/2 gap-2">
         <div class="w-[50%] flex flex-col justify-start gap-1">
@@ -54,7 +52,6 @@
       </div>
     </div>
 
-
     <div class="flex w-full gap-2 mt-2">
       <div class="flex items-end justify-start w-1/2 gap-2">
         <div class="w-[50%] flex flex-col justify-start gap-1">
@@ -70,8 +67,8 @@
       </div>
       <div class="w-[50%] flex flex-col justify-start gap-1">
         <x-form.label label="Biaya Pemakaian" id="biaya_pemakaian" />
-        <x-form.input name="biaya_pemakaian" id="biaya_pemakaian" type="number" :isReadonly="true"
-          value="{{ $pemakaian->biaya_pemakaian }}" :isReadonly="true" />
+        <x-form.input name="biaya_pemakaian" id="biaya_pemakaian" type="text" :isReadonly="true"
+          value="Rp. {{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}" />
       </div>
     </div>
 
@@ -84,13 +81,45 @@
 
       <div class="w-[50%] flex flex-col justify-start gap-1">
         <x-form.label label="Total Bayar Bulan Ini" id="total_bayar" />
-        <x-form.input name="total_bayar" id="total_bayar" type="number" :isReadonly="true"
-          value="{{ $pemakaian->total_bayar }}" :isReadonly="true" />
+        <x-form.input name="total_bayar" id="total_bayar" type="text" :isReadonly="true"
+          value="Rp. {{ number_format($pemakaian->total_bayar, 0, ',', '.') }}" />
       </div>
     </div>
 
-    @if ($pemakaian->status === "belum_lunas")
-    <form action="{{ route('pembayaran.updateStatus', ['id' => $pemakaian->id]) }}" method="POST">
+    <div class="flex w-full gap-2 mt-2">
+      <div class="flex flex-col justify-start w-full gap-1">
+        <x-form.label label="Total Tunggakan Pada Bulan Bulan Sebelumnya" id="total_bayar" />
+        <x-form.input name="tunggakan" id="tunggakan" type="text" :isReadonly="true"
+          value="Rp. {{ number_format($tunggakan, 0, ',', '.') }}" />
+      </div>
+    </div>
+
+    @if ($belumLunas->count() > 0)
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-gray-700">Bulan Belum Lunas:</label>
+        <ul class="text-sm text-red-600 list-disc list-inside">
+          @foreach ($belumLunas as $item)
+            <li>
+              {{ $item->bulan }} {{ $item->tahun }} : Rp. {{ number_format($item->total_bayar, 0, ',', '.') }}
+            </li>
+          @endforeach
+        </ul>
+      </div>
+    @else
+      <p class="mt-4 text-sm text-green-600">Tidak ada tunggakan bulan sebelumnya.</p>
+    @endif
+
+    <form action="{{ route('pembayaran.lunasiSemua', ['no_kontrol' => $pemakaian->no_kontrol]) }}" method="POST"
+      onsubmit="return confirm('Yakin ingin melunasi semua tunggakan?')">
+      @csrf
+      @method('PUT')
+      <div class="mt-4">
+        <x-button.submit label="Lunasi Semua Tunggakan" />
+      </div>
+    </form>
+
+    @if ($pemakaian->status === 'belum_lunas')
+      <form action="{{ route('pembayaran.updateStatus', ['id' => $pemakaian->id]) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -99,5 +128,6 @@
         </div>
       </form>
     @endif
+
   </x-card.container>
 </x-app-layout>

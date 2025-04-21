@@ -29,7 +29,14 @@
         </x-form.container>
         <x-form.container>
           <x-form.label label="Telepon" id="telepon" />
-          <x-form.input name="telepon" id="telepon" type="number" />
+          <x-form.input
+                name="telepon"
+                id="telepon"
+                type="number"
+                maxlength="12"
+                oninput="if(this.value.length > 12) this.value = this.value.slice(0, 12);"
+/>
+
         </x-form.container>
         <x-form.container>
           <x-form.label label="Jenis Pelanggan" id="jenis_plg" />

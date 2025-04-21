@@ -10,7 +10,9 @@
     'placeholder' => '',
     'min' => '',
     'max' => '',
-    'isStatus' => false, // <-- tambahan props khusus
+    'maxlength' => '',
+    'oninput' => '',
+    'isStatus' => false,
 ])
 
 @php
@@ -25,6 +27,8 @@
   <input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}"
     class="rounded-md border-slate-500 text-slate-700 disabled:bg-slate-100 @if ($isHidden) hidden @endif"
     value="{{ $displayValue }}" @if ($isDisabled) disabled @endif
-    @if ($isReadonly) readonly @endif placeholder="{{ $placeholder }}" min="{{ $min }}"
-    max="{{ $max }}">
+    @if ($isReadonly) readonly @endif placeholder="{{ $placeholder }}"
+    min="{{ $min }}" max="{{ $max }}"
+    @if ($maxlength) maxlength="{{ $maxlength }}" @endif
+    @if ($oninput) oninput="{{ $oninput }}" @endif>
 @endif

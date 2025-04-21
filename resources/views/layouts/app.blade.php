@@ -17,6 +17,9 @@
   <link rel="stylesheet"
     href="{{ asset('assets/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css') }}">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
   @stack('css')
 </head>
 

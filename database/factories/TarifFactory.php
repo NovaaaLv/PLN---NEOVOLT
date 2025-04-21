@@ -17,7 +17,7 @@ class TarifFactory extends Factory
     public function definition(): array
     {
         return [
-            'jenis_plg' => $this->faker->word(),
+            'jenis_plg' => $this->faker->unique()->word(),
             'biaya_beban' => $this->faker->numberBetween(1000, 5000),
             'tarif_kwh' => $this->faker->numberBetween(6000, 3400),
         ];

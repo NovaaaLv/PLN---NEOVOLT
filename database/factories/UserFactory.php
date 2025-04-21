@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // Use a default password
             'remember_token' => Str::random(10),
-            'role' => $this->faker->randomElement(['petugas_loket', 'admin']),
+            'role' => $this->faker->randomElement(['petugas_loket']),
         ];
     }
 

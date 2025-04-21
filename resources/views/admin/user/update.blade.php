@@ -30,7 +30,6 @@
           <x-form.label label="Sebagai" id="role" />
           <x-form.select.container name="role" id="role">
             <x-form.select.option value="petugas_loket" label="Petugas Loket" />
-            <x-form.select.option value="admin" label="Admin" />
           </x-form.select.container>
         </x-form.container>
 

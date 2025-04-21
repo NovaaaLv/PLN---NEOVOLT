@@ -100,8 +100,13 @@
             <td class="px-5 py-3 text-left">{{ $pemakaian->meter_awal }}</td>
             <td class="px-5 py-3 text-left">{{ $pemakaian->meter_akhir }}</td>
             <td class="px-5 py-3 text-left">{{ $pemakaian->jumlah_pakai }}</td>
-            <td class="px-5 py-3 text-left">{{ $pemakaian->biaya_pemakaian }}</td>
-            <td class="px-5 py-3 text-left">{{ $pemakaian->total_bayar }}</td>
+            <td class="px-5 py-3 text-left">
+                <span class="inline-flex whitespace-nowrap">Rp {{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</span>
+              </td>
+              <td class="px-5 py-3 text-left">
+                <span class="inline-flex whitespace-nowrap">Rp {{ number_format($pemakaian->total_bayar, 0, ',', '.') }}</span>
+              </td>
+
             <td class="px-5 py-3 text-left">
               <x-status-badge :status="$pemakaian->status" :isButton="true" />
             </td>
@@ -115,18 +120,19 @@
                   </x-slot>
 
                   <x-slot name="content" class="fixed z-50">
-                    @if (Auth::user()->role === 'admin')
+                    <x-table.action-item icon="fa-circle-info"
+                      href="{{ route('pembayaran.view', ['id' => $pemakaian->id]) }}" label="Detail" />
+                      @if ($pemakaian->status === "lunas")
+                      <form action="{{ route('pembayaran.deleteStatus', ['id' => $pemakaian->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <x-table.action-item :isButton="true" label="Batalkan Pembayaran" icon="fa-trash" />
+                      </form>
+                      @endif
+                      @if (Auth::user()->role === 'admin')
                       <x-table.action-item icon="fa-file" href="{{ route('report.index', ['id' => $pemakaian->id]) }}"
                         label="Download Laporan" />
                     @endif
-                    <x-table.action-item icon="fa-circle-info"
-                      href="{{ route('pembayaran.view', ['id' => $pemakaian->id]) }}" label="Detail" />
-                    <form action="{{ route('pembayaran.deleteStatus', ['id' => $pemakaian->id]) }}" method="POST">
-                      @csrf
-                      @method('PUT')
-                      <x-table.action-item :isButton="true" label="Batalkan Pembayaran" icon="fa-trash" />
-                    </form>
-                    </form>
                   </x-slot>
                 </x-dropdown>
             </td>

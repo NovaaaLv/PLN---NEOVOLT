@@ -52,11 +52,11 @@
                 <x-slot name="content">
                   <x-table.action-item icon="fa-pen" href="{{ route('pelanggan.edit', ['id' => $pelanggan->id]) }}"
                     label="Edit" />
-                  <form action="{{ route('pelanggan.delete', ['id' => $pelanggan->id]) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <x-table.action-item :isButton="true" label="Delete" icon="fa-trash" />
-                  </form>
+                    <form action="{{ route('pelanggan.delete', ['id' => $pelanggan->id]) }}" method="POST" class="form-delete">
+                        @csrf
+                        @method('DELETE')
+                        <x-table.action-item :isButton="true" label="Delete" icon="fa-trash" class="btn-delete" />
+                      </form>
                 </x-slot>
               </x-dropdown>
             </div>
@@ -85,4 +85,35 @@
       </tr>
     </table>
   </x-card.container>
+
+  @push('script')
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+  const deleteButtons = document.querySelectorAll('.btn-delete');
+
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', function (e) {
+      e.preventDefault();
+      const form = this.closest('form');
+
+      Swal.fire({
+        title: 'Apakah kamu yakin?',
+        text: "Data ini akan dihapus secara permanen.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    });
+  });
+});
+
+
+      </script>
+  @endpush
 </x-app-layout>

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Ade Nova Admin',
             'email' => 'nova@admin.com',
+            'password' => '123123123',
             'role' => 'admin',
         ]);
 

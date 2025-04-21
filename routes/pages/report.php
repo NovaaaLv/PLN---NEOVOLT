@@ -8,3 +8,4 @@ Route::middleware(['auth', 'role:admin'])->prefix('report')->as('report.')->grou
     Route::get('/all', [ReportController::class, 'all'])->name('all');
     Route::get('/{id}', [ReportController::class, 'index'])->name('index');
 });
+  

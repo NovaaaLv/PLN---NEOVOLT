@@ -88,14 +88,16 @@
           value="{{ $pemakaian->total_bayar }}" :isReadonly="true" />
       </div>
     </div>
+
+    @if ($pemakaian->status === "belum_lunas")
     <form action="{{ route('pembayaran.updateStatus', ['id' => $pemakaian->id]) }}" method="POST">
-      @csrf
-      @method('PUT')
+        @csrf
+        @method('PUT')
 
-      <div class="mt-5">
-        <x-button.submit label="Bayar" />
-      </div>
-    </form>
-
+        <div class="mt-5">
+          <x-button.submit label="Bayar" />
+        </div>
+      </form>
+    @endif
   </x-card.container>
 </x-app-layout>

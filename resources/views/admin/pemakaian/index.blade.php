@@ -15,7 +15,7 @@
       </div>
       <div class="space-y-2">
         <p class="text-sm text-slate-600">
-          Total Pemakaian:
+          Total Data:
           <span
             class="inline-flex items-center px-3 py-1 ml-2 text-xs font-semibold text-indigo-700 bg-indigo-100 rounded-full">
             {{ $totalPemakaian }}
@@ -74,8 +74,9 @@
           <td class="px-5 py-3 text-left">{{ $pemakaian->meter_akhir }}</td>
           <td class="px-5 py-3 text-left">{{ $pemakaian->jumlah_pakai }}</td>
           </td>
-          <td class="px-5 py-3 text-left">{{ $pemakaian->biaya_pemakaian }}</td>
-          <td class="px-5 py-3 text-left">{{ $pemakaian->total_bayar }}</td>
+          <td class="px-5 py-3 text-left whitespace-nowrap">Rp {{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</td>
+        <td class="px-5 py-3 text-left whitespace-nowrap">Rp {{ number_format($pemakaian->total_bayar, 0, ',', '.') }}</td>
+
           <td>
             <div class="hidden sm:flex sm:items-center sm:ms-6">
               <x-dropdown align="right" width="48">
@@ -88,10 +89,10 @@
                 <x-slot name="content">
                   <x-table.action-item icon="fa-pen" href="{{ route('pemakaian.edit', ['id' => $pemakaian->id]) }}"
                     label="Edit" />
-                  <form action="{{ route('pemakaian.delete', ['id' => $pemakaian->id]) }}" method="POST">
+                  <form action="{{ route('pemakaian.delete', ['id' => $pemakaian->id]) }}" method="POST" class="form-delete">
                     @csrf
                     @method('DELETE')
-                    <x-table.action-item :isButton="true" label="Delete" icon="fa-trash" />
+                    <x-table.action-item :isButton="true" label="Delete" icon="fa-trash" class="btn-delete" />
                   </form>
                   </form>
                 </x-slot>
@@ -118,4 +119,35 @@
       </tr>
     </table>
   </x-card.container>
+
+  @push('script')
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+const deleteButtons = document.querySelectorAll('.btn-delete');
+
+deleteButtons.forEach(button => {
+button.addEventListener('click', function (e) {
+  e.preventDefault();
+  const form = this.closest('form');
+
+  Swal.fire({
+    title: 'Apakah kamu yakin?',
+    text: "Data pelanggan ini akan dihapus secara permanen.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, hapus!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      form.submit();
+    }
+  });
+});
+});
+});
+
+
+  </script>
+@endpush
 </x-app-layout>

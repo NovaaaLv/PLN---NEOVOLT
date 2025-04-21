@@ -10,7 +10,7 @@
   <x-card.container>
     <x-card.header label="Detail Data Pembayaran" />
 
-    <div class="flex w-full gap-2">
+    <div class="flex w-full gap-2 mt-2">
       <div class="w-[50%] flex flex-col justify-start gap-1">
         <x-form.label label="No Kontrol" id="no_kontrol" />
         <x-form.input name="no_kontrol_view" id="no_kontrol_view" type="text"
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div class="flex w-full gap-2">
+    <div class="flex w-full gap-2 mt-2">
       <div class="flex items-end justify-start w-1/2 gap-2">
         <div class="w-[50%] flex flex-col justify-start gap-1">
           <x-form.label label="Meter Awal" id="meter_awal" />
@@ -55,7 +55,7 @@
     </div>
 
 
-    <div class="flex w-full gap-2">
+    <div class="flex w-full gap-2 mt-2">
       <div class="flex items-end justify-start w-1/2 gap-2">
         <div class="w-[50%] flex flex-col justify-start gap-1">
           <x-form.label label="Biaya Beban Pemakai" id="biaya_beban_pemakai" />
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <div class="flex w-full gap-2">
+    <div class="flex w-full gap-2 mt-2">
       <div class="w-[50%] flex flex-col justify-start gap-1">
         <x-form.label label="Status" id="status" />
         <x-form.input name="Status" id="status" type="text" :isReadonly="true" :isStatus="true"
@@ -83,7 +83,7 @@
       </div>
 
       <div class="w-[50%] flex flex-col justify-start gap-1">
-        <x-form.label label="Total Bayar" id="total_bayar" />
+        <x-form.label label="Total Bayar Bulan Ini" id="total_bayar" />
         <x-form.input name="total_bayar" id="total_bayar" type="number" :isReadonly="true"
           value="{{ $pemakaian->total_bayar }}" :isReadonly="true" />
       </div>

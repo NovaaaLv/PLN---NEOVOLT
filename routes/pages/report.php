@@ -7,5 +7,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'role:admin'])->prefix('report')->as('report.')->group(function () {
     Route::get('/all', [ReportController::class, 'all'])->name('all');
     Route::get('/{id}', [ReportController::class, 'index'])->name('index');
+    Route::get('/pembayaran/filtered', [ReportController::class, 'filtered'])->name('filtered');
 });
-  

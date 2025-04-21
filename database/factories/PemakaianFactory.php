@@ -18,7 +18,7 @@ class PemakaianFactory extends Factory
     {
         return [
             'no_kontrol' => \App\Models\Pelanggan::inRandomOrder()->first()->no_kontrol,
-            'tahun' => $this->faker->year(),
+            'tahun' => $this->faker->numberBetween(2022, 2025),
             'bulan' => $this->faker->numberBetween(1, 12),
             'meter_awal' => $this->faker->numberBetween(100, 500),
             'meter_akhir' => $this->faker->numberBetween(500, 1000),

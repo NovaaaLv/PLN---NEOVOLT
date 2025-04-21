@@ -82,7 +82,18 @@ class PemakaianController extends Controller
             'tarif_kwh' => ['required', 'numeric'],
         ]);
 
-        // Validasi custom: meter_akhir tidak boleh lebih kecil dari meter_awal
+        // Cek data pemakaian dengan kombinasi no_kontrol, tahun, bulan
+        $cekPemakaian = Pemakaian::where('no_kontrol', $request->no_kontrol)
+            ->where('tahun', $request->tahun)
+            ->where('bulan', $request->bulan)
+            ->exists();
+
+        if ($cekPemakaian) {
+            return redirect()->back()->withInput()->withErrors([
+                'no_kontrol' => 'Data pemakaian untuk No Kontrol, Tahun, dan Bulan tersebut sudah ada.'
+            ]);
+        }
+
         if ($request->meter_akhir < $request->meter_awal) {
             return redirect()->back()->withInput()->withErrors([
                 'meter_akhir' => 'Meter akhir tidak boleh lebih kecil dari meter awal.'
@@ -108,7 +119,6 @@ class PemakaianController extends Controller
 
         return redirect()->route('pemakaian.index')->with('success', 'Data Pemakaian berhasil ditambahkan');
     }
-
 
     public function edit($id)
     {

@@ -119,56 +119,5 @@
         </p>
       </div>
     @endif
-
-    {{-- <form action="{{ route('user.store') }}" method="POST">
-      @csrf
-      @method('POST')
-      <div class="flex flex-col w-full gap-5 ">
-
-        @if ($keyword)
-          <x-form.container>
-            <x-form.label label="No Kontrol" id="no_kontrol" />
-            <x-form.input name="no_kontrol" id="no_kontrol" :isDisabled="true" value="{{ $pelanggan->no_kontrol }}" />
-          </x-form.container>
-        @endif
-
-
-        <div class="flex items-start w-full gap-5">
-          <x-form.container>
-            <x-form.label label="Bulan" id="bulan" />
-            <x-form.input name="bulan" id="bulan" type="number" min="1" max="11" />
-          </x-form.container>
-          <x-form.container>
-            <x-form.label label="Tahun" id="tahun" />
-            <x-form.input name="tahun" id="tahun" type="number" min="1" max="11" />
-          </x-form.container>
-        </div>
-
-        <div class="flex items-start w-full gap-5">
-          <x-form.container>
-            <x-form.label label="Meter Awal" id="meter_awal" />
-            <x-form.input name="meter_awal" id="meter_awal" type="number" min="1" max="11" />
-          </x-form.container>
-          <x-form.container>
-            <x-form.label label="Meter Akhir" id="meter_akhir" />
-            <x-form.input name="meter_akhir" id="meter_akhir" type="number" min="1" max="11" />
-          </x-form.container>
-        </div>
-
-        <x-form.container>
-          <x-form.label label="Sebagai" id="role" />
-          <x-form.select.container name="role" id="role">
-            <x-form.select.option value="" label="" />
-            <x-form.select.option value="petugas_loket" label="Petugas Loket" />
-            <x-form.select.option value="admin" label="Admin" />
-          </x-form.select.container>
-        </x-form.container>
-
-        <div class="">
-          <x-button.submit label="Tambah" />
-        </div>
-      </div>
-
-    </form> --}}
   </x-card.container>
 </x-app-layout>

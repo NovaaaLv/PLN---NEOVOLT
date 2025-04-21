@@ -68,6 +68,17 @@
             class="px-3 py-1 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
             Cari
           </button>
+
+          @if (request('no_kontrol') || request('bulan') || request('tahun'))
+            <a href="{{ route('report.filtered', [
+                'no_kontrol' => request('no_kontrol', null),
+                'bulan' => request('bulan', null),
+                'tahun' => request('tahun', null),
+            ]) }}"
+              class="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">
+              <i class="fa-solid fa-file-pdf"></i> Download Laporan ( Filtered )
+            </a>
+          @endif
         </form>
       </div>
     </x-card.action>
@@ -101,11 +112,13 @@
             <td class="px-5 py-3 text-left">{{ $pemakaian->meter_akhir }}</td>
             <td class="px-5 py-3 text-left">{{ $pemakaian->jumlah_pakai }}</td>
             <td class="px-5 py-3 text-left">
-                <span class="inline-flex whitespace-nowrap">Rp {{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</span>
-              </td>
-              <td class="px-5 py-3 text-left">
-                <span class="inline-flex whitespace-nowrap">Rp {{ number_format($pemakaian->total_bayar, 0, ',', '.') }}</span>
-              </td>
+              <span class="inline-flex whitespace-nowrap">Rp
+                {{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</span>
+            </td>
+            <td class="px-5 py-3 text-left">
+              <span class="inline-flex whitespace-nowrap">Rp
+                {{ number_format($pemakaian->total_bayar, 0, ',', '.') }}</span>
+            </td>
 
             <td class="px-5 py-3 text-left">
               <x-status-badge :status="$pemakaian->status" :isButton="true" />
@@ -122,17 +135,16 @@
                   <x-slot name="content" class="fixed z-50">
                     <x-table.action-item icon="fa-circle-info"
                       href="{{ route('pembayaran.view', ['id' => $pemakaian->id]) }}" label="Detail" />
-                      @if ($pemakaian->status === "lunas")
+                    @if ($pemakaian->status === 'lunas')
                       <form action="{{ route('pembayaran.deleteStatus', ['id' => $pemakaian->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <x-table.action-item :isButton="true" label="Batalkan Pembayaran" icon="fa-trash" />
+                        <x-table.action-item type="submit" :isButton="true" label="Batalkan Pembayaran"
+                          icon="fa-trash" />
                       </form>
-                      @endif
-                      @if (Auth::user()->role === 'admin')
-                      <x-table.action-item icon="fa-file" href="{{ route('report.index', ['id' => $pemakaian->id]) }}"
-                        label="Download Laporan" />
                     @endif
+                    <x-table.action-item icon="fa-file" href="{{ route('report.index', ['id' => $pemakaian->id]) }}"
+                      label="Download Laporan" />
                   </x-slot>
                 </x-dropdown>
             </td>

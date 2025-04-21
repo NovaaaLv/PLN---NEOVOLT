@@ -1,134 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $title }}</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Helvetica', 'Arial', sans-serif;
       margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f5f5f5;
+      padding: 10px;
+      background: #ffffff;
+      color: #333;
+      font-size: 12px;
     }
 
-    .receipt {
-      width: 300px;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .invoice {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    .invoice-header {
       text-align: center;
-      font-size: 14px;
-    }
-
-    .receipt-header {
-      font-size: 18px;
-      font-weight: bold;
       margin-bottom: 15px;
     }
 
-    .receipt-date {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 20px;
+    .invoice-header h1 {
+      margin: 0;
+      font-size: 18px;
+      color: #000;
     }
 
-    .receipt-item {
+    .invoice-header p {
+      margin: 2px 0 0;
+      font-size: 10px;
+      color: #777;
+    }
+
+    .line {
+      border-top: 1px dashed #999;
       margin: 10px 0;
+    }
+
+    .item {
       display: flex;
       justify-content: space-between;
+      margin: 4px 0;
     }
 
-    .receipt-item span {
-      display: inline-block;
-    }
-
-    .receipt-footer {
-      margin-top: 20px;
-      border-top: 1px dashed #ddd;
-      padding-top: 10px;
+    .item span:last-child {
+      font-weight: 600;
     }
 
     .total {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .receipt-line {
-      border-top: 1px dashed #ddd;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #333;
       margin-top: 10px;
+      padding-top: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #000;
     }
 
     .footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #888;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 10px;
+      color: #777;
     }
 
     .footer span {
-      font-weight: bold;
+      font-weight: 600;
+      color: #333;
     }
   </style>
 </head>
 
 <body>
-  <div class="receipt">
-    <div class="receipt-header">
-      {{ $title }}
+  <div class="invoice">
+    <div class="invoice-header">
+      <h1>{{ $title }}</h1>
+      <p>{{ $date }}</p>
     </div>
 
-    <div class="receipt-date">
-      {{ $date }}
-    </div>
-
-    <div class="receipt-item">
+    <div class="item">
       <span>No Kontrol:</span>
       <span>{{ $pemakaian->no_kontrol }}</span>
     </div>
-
-    <div class="receipt-item">
+    <div class="item">
+      <span>Bulan / Tahun:</span>
+      <span>{{ $pemakaian->bulan }} / {{ $pemakaian->tahun }}</span>
+    </div>
+    <div class="item">
       <span>Nama:</span>
       <span>{{ $pemakaian->pelanggan->nama }}</span>
     </div>
-
-    <div class="receipt-item">
+    <div class="item">
       <span>Alamat:</span>
       <span>{{ $pemakaian->pelanggan->alamat }}</span>
     </div>
-
-    <div class="receipt-item">
+    <div class="item">
       <span>Telepon:</span>
       <span>{{ $pemakaian->pelanggan->telepon }}</span>
     </div>
 
-    <div class="receipt-line"></div>
+    <div class="line"></div>
 
-    <div class="receipt-item">
-      <span>Harga:</span>
-      <span>{{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</span>
+    <div class="item">
+      <span>Meter Awal:</span>
+      <span>{{ $pemakaian->meter_awal }}</span>
+    </div>
+    <div class="item">
+      <span>Meter Akhir:</span>
+      <span>{{ $pemakaian->meter_akhir }}</span>
+    </div>
+    <div class="item">
+      <span>Jumlah Pakai:</span>
+      <span>{{ $pemakaian->jumlah_pakai }}</span>
     </div>
 
-    <div class="receipt-item">
-      <span>Status Pembayaran:</span>
+    <div class="line"></div>
+
+    <div class="item">
+      <span>Harga (Pemakaian):</span>
+      <span>Rp {{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</span>
+    </div>
+    <div class="item">
+      <span>Status:</span>
       <span>{{ $pemakaian->status == 'lunas' ? 'Lunas' : 'Belum Lunas' }}</span>
     </div>
 
-    <div class="receipt-footer">
-      <div class="total">
-        <span>Total Pembayaran:</span>
-        <span>{{ number_format($pemakaian->biaya_pemakaian, 0, ',', '.') }}</span>
-      </div>
+    <div class="total">
+      <span>Total Bayar:</span>
+      <span>Rp {{ number_format($pemakaian->total_bayar, 0, ',', '.') }}</span>
     </div>
 
     <div class="footer">
-      <p><span>Terima kasih telah bertransaksi dengan kami!</span></p>
-      <p>Harap simpan struk ini sebagai bukti pembayaran.</p>
+      <p><span>Terima kasih</span> telah bertransaksi!</p>
+      <p>Simpan struk ini sebagai bukti pembayaran.</p>
     </div>
   </div>
 </body>

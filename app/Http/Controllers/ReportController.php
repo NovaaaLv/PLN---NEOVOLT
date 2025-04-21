@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pemakaian;
 use PDF;
+use Illuminate\Http\Request;
+
 
 class ReportController extends Controller
 {
@@ -20,7 +22,7 @@ class ReportController extends Controller
 
         // Pengaturan ukuran halaman untuk struk
         $pdf = PDF::loadView('admin.report.view', $data)
-            ->setPaper([0, 0, 350, 380], 'portrait');
+            ->setPaper([0, 0, 526.77, 525.19], 'portrait');
 
         return $pdf->download($fileName);
     }
@@ -42,7 +44,52 @@ class ReportController extends Controller
         $pdf = PDF::loadView('admin.report.all', $data)
             ->setPaper([0, 0, 1400, 700], 'potrait');
 
+        return $pdf->download($fileName);
+    }
 
+
+    public function filtered(Request $request)
+    {
+        $no_kontrol = $request->no_kontrol;
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+
+        $pemakaianQuery = Pemakaian::query();
+
+        if ($no_kontrol) {
+            $pemakaianQuery->where('no_kontrol', $no_kontrol);
+        }
+
+        if ($bulan) {
+            $pemakaianQuery->where('bulan', $bulan);
+        }
+
+        if ($tahun) {
+            $pemakaianQuery->where('tahun', $tahun);
+        }
+
+        $pemakaian = $pemakaianQuery->with('pelanggan')->get();
+
+        if ($pemakaian->isEmpty()) {
+            abort(404, 'No data found for the given filters.');
+        }
+
+        // Filter status lunas dan belum lunas
+        $lunas = $pemakaian->where('status', 'lunas');
+        $belumLunas = $pemakaian->where('status', '!=', 'lunas');
+
+        $data = [
+            'title'       => 'Laporan Pembayaran',
+            'date'        => date('d/m/Y'),
+            'pemakaian'   => $pemakaian,
+            'lunas'       => $lunas,
+            'belumLunas'  => $belumLunas,
+        ];
+
+        $fileName = 'PLNEOVLT - ' . $pemakaian->first()->pelanggan->nama . ' - ' . $tahun . '-' . $bulan . '.pdf';
+
+        $pdf = PDF::loadView('admin.report.filtered', $data)
+            ->setPaper([0, 0, 1400, 700], 'portrait');
 
         return $pdf->download($fileName);
     }

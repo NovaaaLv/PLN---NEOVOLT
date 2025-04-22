@@ -143,7 +143,7 @@
                           icon="fa-trash" />
                       </form>
                     @endif --}}
-                    <x-table.action-item icon="fa-file" href="{{ route('report.index', ['id' => $pemakaian->id]) }}"
+                    <x-table.action-item icon="fa-file" href="{{ route('pembayaran.report', ['id' => $pemakaian->id]) }}"
                       label="Download Laporan" />
                   </x-slot>
                 </x-dropdown>

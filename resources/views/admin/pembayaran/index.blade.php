@@ -135,14 +135,14 @@
                   <x-slot name="content" class="fixed z-50">
                     <x-table.action-item icon="fa-circle-info"
                       href="{{ route('pembayaran.view', ['id' => $pemakaian->id]) }}" label="Detail" />
-                    @if ($pemakaian->status === 'lunas')
+                    {{-- @if ($pemakaian->status === 'lunas')
                       <form action="{{ route('pembayaran.deleteStatus', ['id' => $pemakaian->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <x-table.action-item type="submit" :isButton="true" label="Batalkan Pembayaran"
                           icon="fa-trash" />
                       </form>
-                    @endif
+                    @endif --}}
                     <x-table.action-item icon="fa-file" href="{{ route('report.index', ['id' => $pemakaian->id]) }}"
                       label="Download Laporan" />
                   </x-slot>

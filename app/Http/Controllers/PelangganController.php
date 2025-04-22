@@ -25,7 +25,10 @@ class PelangganController extends Controller
     {
         $jenis_pelanggans = Tarif::all();
         $pelangganCout = Pelanggan::count();
-        return view('admin.pelanggan.create', compact('jenis_pelanggans'));
+
+        $pelangganCount = Pelanggan::count();
+        $no_kontrol = 'PLNVOLTNE' . sprintf('%03d', $pelangganCount);
+        return view('admin.pelanggan.create', compact(['jenis_pelanggans','no_kontrol']));
     }
     public function store(Request $request)
     {

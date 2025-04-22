@@ -17,7 +17,7 @@
         <x-form.container>
           <x-form.label label="No Kontrol" id="no_kontrol" />
           <x-form.input name="no_kontrol" id="no_kontrol" type="text" :isDisabled="true"
-            placeholder="Otomatis Dibuat" />
+            value="{{ $no_kontrol }}" />
         </x-form.container>
         <x-form.container>
           <x-form.label label="Nama" id="nama" />

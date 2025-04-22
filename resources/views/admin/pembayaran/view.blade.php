@@ -173,6 +173,17 @@
         </div>
         <p class="text-sm font-medium text-green-800">Tidak ada tunggakan bulan sebelumnya.</p>
       </div>
+
+      @if ($pemakaian->status === 'belum_lunas')
+      <form action="{{ route('pembayaran.updateStatus', ['id' => $pemakaian->id]) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="mt-5">
+          <x-button.submit label="Bayar" />
+        </div>
+      </form>
+    @endif
     @endif
 
     {{-- @if ($pemakaian->status === 'belum_lunas')

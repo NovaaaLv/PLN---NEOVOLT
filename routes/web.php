@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',function(){
     return redirect(route('data-pemakaian-listrik.index'));
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return redirect(route('user.index'));

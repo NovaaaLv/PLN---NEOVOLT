@@ -12,7 +12,9 @@ class PembayaranController extends Controller
         $query = Pemakaian::with(['pelanggan']);
 
         if ($request->filled('no_kontrol')) {
-            $query->where('no_kontrol', 'like', '%' . $request->no_kontrol . '%');
+            $query->whereHas('pelanggan', function ($q) use ($request) {
+                $q->where('no_kontrol', 'like', '%' . $request->no_kontrol . '%');
+            });
         }
 
         if ($request->filled('tahun')) {
@@ -23,32 +25,19 @@ class PembayaranController extends Controller
             $query->where('bulan', $request->bulan);
         }
 
-        $query->orderBy('created_at', 'desc');
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
 
-        // Pagination hanya untuk data yang ditampilkan
         $pemakaians = $query->paginate(10);
 
-        // Hitung total lunas & belum lunas dari seluruh data yang sesuai filter (tanpa pagination)
-        $baseQuery = Pemakaian::query();
+        $totalSemua = Pemakaian::count();
+        $totalLunas = Pemakaian::where('status', 'lunas')->count();
+        $totalBelumLunas = Pemakaian::where('status', 'belum_lunas')->count();
 
-        if ($request->filled('no_kontrol')) {
-            $baseQuery->where('no_kontrol', 'like', '%' . $request->no_kontrol . '%');
-        }
-
-        if ($request->filled('tahun')) {
-            $baseQuery->where('tahun', $request->tahun);
-        }
-
-        if ($request->filled('bulan')) {
-            $baseQuery->where('bulan', $request->bulan);
-        }
-
-        $totalLunas = (clone $baseQuery)->where('status', 'lunas')->count();
-        $totalBelumLunas = (clone $baseQuery)->where('status', 'belum_lunas')->count();
-        $totalSemua = (clone $baseQuery)->count();
-
-        return view('admin.pembayaran.index', compact('pemakaians', 'totalLunas', 'totalBelumLunas', 'totalSemua'));
+        return view('admin.pembayaran.index', compact('pemakaians', 'totalSemua', 'totalLunas', 'totalBelumLunas'));
     }
+
 
     public function view(Request $request, $id)
     {

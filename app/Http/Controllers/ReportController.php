@@ -53,6 +53,7 @@ class ReportController extends Controller
         $no_kontrol = $request->no_kontrol;
         $bulan = $request->bulan;
         $tahun = $request->tahun;
+        $status = $request->status;
 
         $pemakaianQuery = Pemakaian::query();
 
@@ -66,6 +67,10 @@ class ReportController extends Controller
 
         if ($tahun) {
             $pemakaianQuery->where('tahun', $tahun);
+        }
+
+        if ($status) {
+            $pemakaianQuery->where('status', $status);
         }
 
         $pemakaian = $pemakaianQuery->with('pelanggan')->get();

@@ -37,14 +37,16 @@
               class="absolute z-10 px-2 py-1 mb-2 text-xs text-white transition-all duration-300 ease-in-out scale-0 bg-gray-800 rounded opacity-0 bottom-full group-hover:opacity-100 group-hover:scale-100 whitespace-nowrap">Belum
               Lunas</span>
           </span>
-          <a href="{{ route('report.all') }}"
-            class="relative inline-flex items-center justify-center ml-2 text-sm font-semibold text-indigo-700 rounded-full cursor-pointer group">
-            <i class="fa-solid fa-file-pdf"></i>
+          @if (Auth::user()->role === 'admin')
+            <a href="{{ route('report.all') }}"
+              class="relative inline-flex items-center justify-center ml-2 text-sm font-semibold text-indigo-700 rounded-full cursor-pointer group">
+              <i class="fa-solid fa-file-pdf"></i>
 
-            <span
-              class="absolute z-10 px-2 py-1 mb-2 text-xs text-white transition-all duration-300 ease-in-out scale-0 bg-gray-800 rounded opacity-0 bottom-full group-hover:opacity-100 group-hover:scale-100 whitespace-nowrap">Download
-              Laporan</span>
-          </a>
+              <span
+                class="absolute z-10 px-2 py-1 mb-2 text-xs text-white transition-all duration-300 ease-in-out scale-0 bg-gray-800 rounded opacity-0 bottom-full group-hover:opacity-100 group-hover:scale-100 whitespace-nowrap">Download
+                Laporan</span>
+            </a>
+          @endif
         </p>
         {{-- Search No Kontrol Tahun dan Bulan --}}
         <form action="{{ route('pembayaran.index') }}" method="GET" class="flex items-center gap-2">
@@ -64,21 +66,31 @@
             @endforeach
           </select>
 
+          <select name="status"
+            class="px-3 py-1 text-sm border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none text-slate-600 w-[150px]">
+            <option value="">Status</option>
+            <option value="lunas" @selected(request('status') == 'lunas')>Lunas</option>
+            <option value="belum_lunas" @selected(request('status') == 'belum_lunas')>Belum Lunas</option>
+          </select>
+
+
           <button type="submit"
             class="px-3 py-1 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
             Cari
           </button>
 
-          @if (request('no_kontrol') || request('bulan') || request('tahun'))
+          @if (request('no_kontrol') || request('bulan') || request('tahun') || request('status'))
             <a href="{{ route('report.filtered', [
                 'no_kontrol' => request('no_kontrol', null),
                 'bulan' => request('bulan', null),
                 'tahun' => request('tahun', null),
+                'status' => request('status', null),
             ]) }}"
               class="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">
               <i class="fa-solid fa-file-pdf"></i> Download Laporan ( Filtered )
             </a>
           @endif
+
         </form>
       </div>
     </x-card.action>
@@ -143,8 +155,8 @@
                           icon="fa-trash" />
                       </form>
                     @endif --}}
-                    <x-table.action-item icon="fa-file" href="{{ route('pembayaran.report', ['id' => $pemakaian->id]) }}"
-                      label="Download Laporan" />
+                    <x-table.action-item icon="fa-file"
+                      href="{{ route('pembayaran.report', ['id' => $pemakaian->id]) }}" label="Download Laporan" />
                   </x-slot>
                 </x-dropdown>
             </td>

@@ -18,8 +18,15 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Ade Nova Admin',
             'email' => 'nova@admin.com',
-            'password' => '123123123',
+            'password' => 'admin123',
             'role' => 'admin',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Ade Nova Petugas Loket',
+            'email' => 'nova@petugas.com',
+            'password' => 'petugas123',
+            'role' => 'petugas_loket',
         ]);
 
         $this->call([
